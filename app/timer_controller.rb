@@ -10,7 +10,12 @@ class TimerController < UIViewController
   end
 
   def touchesEnded(touches, withEvent: event)
-    @coach.record_round
+    if @coach.timer_running?
+      @coach.record_round
+    else
+      @coach.reset!
+    end
+
     view.update @coach
   end
 end

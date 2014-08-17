@@ -8,7 +8,7 @@ class TimerView < UIView
 
   def create_counter_label
     @counter_label = UILabel.new
-    @counter_label.text = "0"
+    @counter_label.text = "Start"
     @counter_label.frame = self.frame
     @counter_label.adjustsFontSizeToFitWidth = true
     @counter_label.font = UIFont.fontWithName("Arial", size:64)
