@@ -2,11 +2,15 @@ GEM
   remote: https://rubygems.org/
   specs:
     motion-redgreen (0.1.0)
+    motion-stump (0.3.2)
     rake (10.3.2)
+    sugarcube (2.0.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   motion-redgreen
+  motion-stump
   rake
+  sugarcube

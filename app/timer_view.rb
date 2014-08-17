@@ -7,13 +7,16 @@ class TimerView < UIView
   end
 
   def create_counter_label
-    counter_label = UILabel.new
-    counter_label.text = "0"
-    counter_label.frame = self.frame
-    counter_label.adjustsFontSizeToFitWidth = true
-    counter_label.font =  UIFont.fontWithName("Arial", size:64)
+    @counter_label = UILabel.new
+    @counter_label.text = "0"
+    @counter_label.frame = self.frame
+    @counter_label.adjustsFontSizeToFitWidth = true
+    @counter_label.font = UIFont.fontWithName("Arial", size:64)
 
+    self.addSubview(@counter_label)
+  end
 
-    self.addSubview(counter_label)
+  def update(coach)
+    @counter_label.text = coach.rounds_count.to_s
   end
 end

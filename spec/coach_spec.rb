@@ -1,6 +1,8 @@
 describe "Coach" do
   before do
     @coach = Coach.new
+    @start = Time.now
+    @coach.reset!
   end
 
   context "with zero rounds" do
@@ -15,11 +17,20 @@ describe "Coach" do
 
   describe "record_round" do
     before do
+      @coach.stub!(:get_time, return: @start)
+      @coach.reset!
+
+      @coach.record_round
+      @coach.stub!(:get_time, return: @start + 29.3)
       @coach.record_round
     end
 
     it "increments the count" do
-      @coach.rounds_count.should == 1
+      @coach.rounds_count.should == 2
+    end
+
+    it "records the round time" do
+      @coach.average.should == 15
     end
   end
 end
