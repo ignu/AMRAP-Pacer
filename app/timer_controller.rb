@@ -9,6 +9,10 @@ class TimerController < UIViewController
     super
   end
 
+  def prefersStatusBarHidden
+    true
+  end
+
   def touchesEnded(touches, withEvent: event)
     if @coach.timer_running?
       @coach.record_round
