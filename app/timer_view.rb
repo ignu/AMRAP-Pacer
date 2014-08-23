@@ -5,6 +5,7 @@ class TimerView < UIView
     super rect
     create_counter_label
     create_average_label
+    clear_progress_view
   end
 
   def create_counter_label
@@ -44,10 +45,13 @@ class TimerView < UIView
     @average_label.text = "#{minutes.to_s.rjust(2, '0')}:#{remainder.to_s.rjust(2, '0')}"
   end
 
+  def clear_progress_view
+    @progress_view.removeFromSuperview if @progress_view
+  end
+
   def add_progress_view(seconds)
     self.becomeFirstResponder()
-
-    @progress_view.removeFromSuperview if @progress_view
+    clear_progress_view
 
     rect = CGRectMake(0, 0, self.frame.size.width, 1)
     @progress_view = ProgressView.alloc.initWithFrame(rect)
