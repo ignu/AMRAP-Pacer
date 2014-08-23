@@ -20,6 +20,10 @@ class SettingsController < UIViewController
     true
   end
 
+  def reset_coach
+    @coach.reset!
+  end
+
   def nav_controller
     UIApplication.sharedApplication.keyWindow.rootViewController
   end

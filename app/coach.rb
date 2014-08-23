@@ -2,10 +2,14 @@ class Coach
   attr_accessor :rounds_count
 
   def reset!
-    @start_time = get_time
+    @start_time = nil
     self.rounds_count = 0
-    return if @resets.nil?
-    @resets.each { |r| r.call }
+    App.notification_center.post "ResetTimer"
+  end
+
+  def start!
+    self.rounds_count = 0
+    @start_time = get_time
   end
 
   def average
@@ -33,11 +37,5 @@ class Coach
 
   def timer_running?
     !!@start_time
-  end
-
-  def on_reset(&proc)
-    @resets ||= []
-    handler = proc.respond_to?('weak!') ? proc.weak! : proc
-    @resets.push handler
   end
 end

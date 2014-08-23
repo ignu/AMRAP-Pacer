@@ -15,11 +15,11 @@ describe "Coach" do
     end
   end
 
-  describe "on_reset" do
-    it "executes the block on reset" do
+  describe "reset!" do
+    it "sends a message on NSNotificationCenter" do
       x = 1
 
-      @coach.on_reset do
+      App.notification_center.observe "ResetTimer" do |n|
         x = x + 1
       end
 
@@ -27,6 +27,8 @@ describe "Coach" do
       @coach.reset!
       x.should == 2
     end
+
+    App.notification_center.unobserve "ResetTimer"
   end
 
   describe "record_round" do

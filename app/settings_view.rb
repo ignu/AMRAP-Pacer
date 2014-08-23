@@ -1,6 +1,4 @@
 class SettingsView < UIView
-  attr_accessor :counter_label
-
   def drawRect(rect)
     super rect
     self.add_reset_button
@@ -12,6 +10,10 @@ class SettingsView < UIView
     button.setTitle("Reset", forState:UIControlStateSelected)
     button.frame = [[0, self.frame.size.height-100], [320, 100]]
     button.setBackgroundColor :white.uicolor
+
+    button.on :touch do
+      self.controller.reset_coach
+    end
 
     self.addSubview(button)
   end

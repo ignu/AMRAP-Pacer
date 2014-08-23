@@ -1,4 +1,3 @@
-
 class AppDelegate
   def application(application, didFinishLaunchingWithOptions:launchOptions)
 
@@ -7,12 +6,10 @@ class AppDelegate
 
     nc = UINavigationController.alloc.initWithRootViewController vc
 
-    coach.on_reset do
-     vc = TimerController.new coach
-     nc.pop
-     nc.push vc
+    App.notification_center.observe "ResetTimer" do |n|
+      p "timer reset ...."
+      vc.view.setNeedsDisplay
     end
-
 
     @window = UIWindow.alloc.initWithFrame(UIScreen.mainScreen.bounds)
     @window.rootViewController = nc

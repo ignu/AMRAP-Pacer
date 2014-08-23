@@ -1,6 +1,9 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    bubble-wrap (1.7.0)
+      bubble-wrap-http (= 1.7.0)
+    bubble-wrap-http (1.7.0)
     motion-redgreen (0.1.0)
     motion-stump (0.3.2)
     rake (10.3.2)
@@ -10,6 +13,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bubble-wrap
   motion-redgreen
   motion-stump
   rake

@@ -28,7 +28,7 @@ class TimerController < UIViewController
     if @coach.timer_running?
       @coach.record_round
     else
-      @coach.reset!
+      @coach.start!
     end
 
     self.view.update @coach

@@ -8,6 +8,7 @@ class TimerView < UIView
   end
 
   def create_counter_label
+    @counter_label.removeFromSuperview unless  @counter_label.nil?
     @counter_label = UILabel.new
     @counter_label.text = "Start"
     @counter_label.frame = self.frame
@@ -19,6 +20,7 @@ class TimerView < UIView
   end
 
   def create_average_label
+    @average_label.removeFromSuperview unless @average_label.nil?
     @average_label = UILabel.new
     @average_label.text = "No average yet"
     @average_label.frame = [[0, self.frame.size.height-100], [320, 100]]
