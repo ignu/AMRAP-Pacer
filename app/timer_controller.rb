@@ -1,16 +1,27 @@
 class TimerController < UIViewController
+  def initialize(coach)
+    @coach = coach
+  end
+
   def loadView
     self.view = TimerView.new
-    @coach = Coach.new
   end
 
   def viewDidLoad
     view.backgroundColor = UIColor.whiteColor
+    view.on_swipe :left do |gesture|
+      new_vc = SettingsController.new(@coach)
+      nav_controller.push new_vc
+    end
     super
   end
 
   def prefersStatusBarHidden
     true
+  end
+
+  def nav_controller
+    UIApplication.sharedApplication.keyWindow.rootViewController
   end
 
   def touchesEnded(touches, withEvent: event)
@@ -20,6 +31,6 @@ class TimerController < UIViewController
       @coach.reset!
     end
 
-    view.update @coach
+    self.view.update @coach
   end
 end

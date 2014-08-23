@@ -15,6 +15,20 @@ describe "Coach" do
     end
   end
 
+  describe "on_reset" do
+    it "executes the block on reset" do
+      x = 1
+
+      @coach.on_reset do
+        x = x + 1
+      end
+
+      x.should == 1
+      @coach.reset!
+      x.should == 2
+    end
+  end
+
   describe "record_round" do
     before do
       @coach.stub!(:get_time, return: @start)

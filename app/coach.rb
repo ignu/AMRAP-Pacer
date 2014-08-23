@@ -4,6 +4,8 @@ class Coach
   def reset!
     @start_time = get_time
     self.rounds_count = 0
+    return if @resets.nil?
+    @resets.each { |r| r.call }
   end
 
   def average
@@ -31,5 +33,11 @@ class Coach
 
   def timer_running?
     !!@start_time
+  end
+
+  def on_reset(&proc)
+    @resets ||= []
+    handler = proc.respond_to?('weak!') ? proc.weak! : proc
+    @resets.push handler
   end
 end
