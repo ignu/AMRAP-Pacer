@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rake'
 
 gem 'motion-redgreen'
+
 gem 'bubble-wrap', :require => [
   "bubble-wrap/core"
 ]
@@ -10,5 +11,8 @@ gem 'bubble-wrap', :require => [
 gem 'sugarcube', :require => [
   'sugarcube-all'
 ]
+
+gem 'formotion'
+
 gem 'motion-stump'
 

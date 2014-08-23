@@ -4,7 +4,11 @@ GEM
     bubble-wrap (1.7.0)
       bubble-wrap-http (= 1.7.0)
     bubble-wrap-http (1.7.0)
+    formotion (1.8)
+      bubble-wrap (>= 1.4.0)
+      motion-require (>= 0.1.0)
     motion-redgreen (0.1.0)
+    motion-require (0.2.0)
     motion-stump (0.3.2)
     rake (10.3.2)
     sugarcube (2.0.1)
@@ -14,6 +18,7 @@ PLATFORMS
 
 DEPENDENCIES
   bubble-wrap
+  formotion
   motion-redgreen
   motion-stump
   rake

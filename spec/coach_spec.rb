@@ -2,7 +2,7 @@ describe "Coach" do
   before do
     @coach = Coach.new
     @start = Time.now
-    @coach.reset!
+    @coach.start!
   end
 
   context "with zero rounds" do

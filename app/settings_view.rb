@@ -2,6 +2,15 @@ class SettingsView < UIView
   def drawRect(rect)
     super rect
     self.add_reset_button
+    self.render_form
+  end
+
+  def render_form
+    p '-' * 88
+    p "form.render: #{form.render}"
+  end
+
+  def submit
   end
 
   def add_reset_button
