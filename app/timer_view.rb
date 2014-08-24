@@ -35,7 +35,7 @@ class TimerView < UIView
   def update(coach)
     @counter_label.text = coach.rounds_count.to_s
     @average_label.text = self.print_time coach.average
-    add_progress_view(coach.average) if coach.rounds_count > 0
+    add_progress_view(coach.round_goal) unless coach.round_goal.nil?
   end
 
   def print_time(seconds)

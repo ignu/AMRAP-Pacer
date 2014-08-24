@@ -2,6 +2,10 @@ class SettingsController < Formotion::FormController
   def initialize(coach)
     @coach = coach
     self.initWithForm(self.form)
+
+    self.form.on_submit do |form|
+      @coach.update_settings(form.render)
+    end
   end
 
   def loadView
@@ -34,7 +38,7 @@ class SettingsController < Formotion::FormController
 
   def form
     @form ||= Formotion::Form.new({
-      title: "Kitchen Sink",
+      title: "Round Info",
       sections: [{
         title: "Round Info",
         footer: "The progress bar will update to keep you on track to this goal. Leave these blank to set the goal based on your current progress.",
@@ -42,8 +46,8 @@ class SettingsController < Formotion::FormController
           title: "Time",
           key: :time,
           placeholder: "20:00",
-          image: "email",
-          type: :number,
+          image: "time",
+          type: :string,
           input_accessory: :done
         }, {
           title: "Goal Rounds",
@@ -53,12 +57,9 @@ class SettingsController < Formotion::FormController
           type: :number,
           input_accessory: :done
         }, {
-
-
           title: "Show Timer?",
           key: :show_timer,
           type: :switch,
-
         },
         {
           title: "Save",
@@ -67,10 +68,6 @@ class SettingsController < Formotion::FormController
         ]
       }]
 })
-  end
-
-  def prefersStatusBarHidden
-    true
   end
 
   def reset_coach

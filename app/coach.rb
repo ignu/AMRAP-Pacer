@@ -1,5 +1,5 @@
 class Coach
-  attr_accessor :rounds_count
+  attr_accessor :rounds_count, :goal, :time, :show_timer
 
   def reset!
     @start_time = nil
@@ -10,6 +10,21 @@ class Coach
   def start!
     self.rounds_count = 0
     @start_time = get_time
+  end
+
+  def update_settings(hash)
+    self.goal = hash[:goal]
+    self.time = hash[:time]
+  end
+
+  def round_goal
+    return self.average if self.goal.nil?
+    get_seconds / self.goal.to_i
+  end
+
+  def get_seconds
+    time_parts = self.time.split(":")
+    time_parts[0].to_i * 60 +  time_parts[1].to_i
   end
 
   def average
