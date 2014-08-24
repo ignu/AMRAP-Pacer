@@ -19,11 +19,19 @@ class Coach
 
   def round_goal
     return self.average if self.goal.nil?
-    (self.remaining_time / self.goal.to_i).round(0)
+
+    # avoid divide by zero errors and negative times
+    return self.average if self.remaining_rounds_for_goal < 1
+
+    (self.remaining_time / self.remaining_rounds_for_goal).round(0)
   end
 
   def remaining_time
-    (self.minutes * 60) - self.current_time
+    (self.minutes.to_i * 60) - self.current_time
+  end
+
+  def remaining_rounds_for_goal
+    self.goal.to_i - self.rounds_count
   end
 
   def average

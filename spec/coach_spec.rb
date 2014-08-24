@@ -35,15 +35,22 @@ describe "Coach" do
     context "given a goal and a time" do
       before do
         @coach.update_settings({
-          goal: 10,
-          minutes: 10
+          goal: "10",
+          minutes: "10"
         })
       end
 
       it "calculates the speed you need to reach the goal" do
         @coach.round_goal.should == 60
-        @coach.stub!(:get_time, return: @start + 60*9)
-        @coach.round_goal.to_i.should == (60/9).to_i
+
+        5.times { |n| @coach.record_round }
+        @coach.stub!(:get_time, return: @start + 60 * 9)
+
+        # 5 rounds in 60 seconds
+        @coach.round_goal.to_i.should == 12
+
+        5.times { |n| @coach.record_round }
+        @coach.round_goal.to_i.should == (60*9)/10
       end
     end
   end
