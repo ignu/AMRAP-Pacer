@@ -23,7 +23,7 @@ class TimerView < UIView
   def create_average_label
     @average_label.removeFromSuperview unless @average_label.nil?
     @average_label = UILabel.new
-    @average_label.text = "No average yet"
+    @average_label.text = "Swipe for options"
     @average_label.frame = [[0, self.frame.size.height-100], [320, 100]]
     @average_label.adjustsFontSizeToFitWidth = true
     @average_label.font = UIFont.fontWithName("TrebuchetMS", size: 32)

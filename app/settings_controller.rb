@@ -43,11 +43,11 @@ class SettingsController < Formotion::FormController
         title: "Round Info",
         footer: "The progress bar will update to keep you on track to this goal. Leave these blank to set the goal based on your current progress.",
         rows: [{
-          title: "Time",
-          key: :time,
-          placeholder: "20:00",
+          title: "Minutes",
+          key: :minutes,
+          placeholder: "20",
           image: "time",
-          type: :string,
+          type: :number,
           input_accessory: :done
         }, {
           title: "Goal Rounds",
