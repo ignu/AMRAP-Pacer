@@ -5,6 +5,7 @@ class SettingsController < Formotion::FormController
 
     self.form.on_submit do |form|
       @coach.update_settings(form.render)
+      self.reset_coach
     end
   end
 
@@ -15,7 +16,6 @@ class SettingsController < Formotion::FormController
       nav_controller.pop
     end
   end
-
 
   def viewDidLoad
     super
@@ -72,6 +72,7 @@ class SettingsController < Formotion::FormController
 
   def reset_coach
     @coach.reset!
+    self.nav_controller.pop
   end
 
   def nav_controller
