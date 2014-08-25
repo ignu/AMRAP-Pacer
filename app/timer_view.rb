@@ -6,6 +6,7 @@ class TimerView < UIView
     create_counter_label
     create_average_label
     clear_progress_view
+    self.create_goal_label
   end
 
   def create_counter_label
@@ -24,25 +25,46 @@ class TimerView < UIView
     @average_label.removeFromSuperview unless @average_label.nil?
     @average_label = UILabel.new
     @average_label.text = "Swipe for options"
-    @average_label.frame = [[0, self.frame.size.height-100], [320, 100]]
+    @average_label.frame = [[0, self.frame.size.height-150], [320, 100]]
     @average_label.adjustsFontSizeToFitWidth = true
-    @average_label.font = UIFont.fontWithName("TrebuchetMS", size: 32)
+    @average_label.font = UIFont.fontWithName("TrebuchetMS", size: 28)
     @average_label.textAlignment = NSTextAlignmentCenter
 
     self.addSubview(@average_label)
   end
 
+  def create_goal_label
+    @goal_label.removeFromSuperview unless @goal_label.nil?
+    @goal_label = UILabel.new
+    @goal_label.text = ""
+    @goal_label.frame = [[0, self.frame.size.height-100], [320, 100]]
+    @goal_label.adjustsFontSizeToFitWidth = true
+    @goal_label.font = UIFont.fontWithName("TrebuchetMS", size: 28)
+    @goal_label.textAlignment = NSTextAlignmentCenter
+
+    self.addSubview(@goal_label)
+  end
+
+
   def update(coach)
     @counter_label.text = coach.rounds_count.to_s
-    @average_label.text = self.print_time coach.average
-    add_progress_view(coach.round_goal) unless coach.round_goal.nil?
+    if coach.average.nil?
+      @average_label.text = ""
+    else
+      @average_label.text = "Average: #{self.print_time coach.average}"
+    end
+
+    unless coach.round_goal.nil?
+      @goal_label.text = "Goal: #{self.print_time coach.round_goal}" unless coach.round_goal.nil?
+      add_progress_view(coach.round_goal)
+    end
   end
 
   def print_time(seconds)
     return if seconds.nil?
     minutes = seconds/60
     remainder = seconds - (minutes*60)
-    @average_label.text = "#{minutes.to_s.rjust(2, '0')}:#{remainder.to_s.rjust(2, '0')}"
+    "#{minutes.to_s.rjust(2, '0')}:#{remainder.to_s.rjust(2, '0')}"
   end
 
   def clear_progress_view
