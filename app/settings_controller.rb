@@ -47,6 +47,7 @@ class SettingsController < Formotion::FormController
           key: :minutes,
           placeholder: "20",
           image: "time",
+          value: @coach.minutes,
           type: :number,
           input_accessory: :done
         }, {
@@ -55,6 +56,7 @@ class SettingsController < Formotion::FormController
           placeholder: "14",
           image: "goal",
           type: :number,
+          value: @coach.goal,
           input_accessory: :done
         }, {
           title: "Show Timer?",
