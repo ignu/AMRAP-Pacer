@@ -42,7 +42,7 @@ class Coach
   def average
     return nil unless self.rounds_count > 0
     result = current_time / self.rounds_count
-    result.to_i
+    result.round(0)
   end
 
   def current_time

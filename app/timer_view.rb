@@ -1,7 +1,10 @@
 class TimerView < UIView
   attr_accessor :counter_label
+  PRIMARY_LABEL_COLOR   = UIColor.blackColor
+  SECONDARY_LABEL_COLOR = UIColor.blackColor
 
   def drawRect(rect)
+    reset_timer
     super rect
     create_counter_label
     create_average_label
@@ -14,6 +17,7 @@ class TimerView < UIView
     @counter_label.removeFromSuperview unless  @counter_label.nil?
     @counter_label = UILabel.new
     @counter_label.text = "Start"
+    @counter_label.color = PRIMARY_LABEL_COLOR
     @counter_label.frame = self.frame
     @counter_label.adjustsFontSizeToFitWidth = true
     @counter_label.font = UIFont.fontWithName("TrebuchetMS", size: 128)
@@ -26,6 +30,7 @@ class TimerView < UIView
     @average_label.removeFromSuperview unless @average_label.nil?
     @average_label = UILabel.new
     @average_label.text = "Swipe for options"
+    @average_label.color = SECONDARY_LABEL_COLOR
     @average_label.frame = [[0, self.frame.size.height-150], [320, 100]]
     @average_label.adjustsFontSizeToFitWidth = true
     @average_label.font = UIFont.fontWithName("TrebuchetMS", size: 28)
@@ -38,6 +43,7 @@ class TimerView < UIView
     @goal_label.removeFromSuperview unless @goal_label.nil?
     @goal_label = UILabel.new
     @goal_label.text = ""
+    @goal_label.color = SECONDARY_LABEL_COLOR
     @goal_label.frame = [[0, self.frame.size.height-100], [320, 100]]
     @goal_label.adjustsFontSizeToFitWidth = true
     @goal_label.font = UIFont.fontWithName("TrebuchetMS", size: 28)
@@ -50,6 +56,7 @@ class TimerView < UIView
     @timer_label.removeFromSuperview unless @goal_label.nil?
     @timer_label = UILabel.new
     @timer_label.text = ""
+    @timer_label.color = SECONDARY_LABEL_COLOR
     @timer_label.frame = [[0, 10], [320, 100]]
     @timer_label.adjustsFontSizeToFitWidth = true
     @timer_label.font = UIFont.fontWithName("TrebuchetMS", size: 42)
@@ -67,6 +74,12 @@ class TimerView < UIView
     return unless @coach.show_timer
     return if @coach.current_time.nil?
     @timer_label.text = self.print_time(@coach.current_time.to_i)
+  end
+
+  def reset_timer
+    return if @timer.nil?
+    @timer.invalidate
+    @timer = nil
   end
 
   def update(coach)
