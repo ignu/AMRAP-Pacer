@@ -6,6 +6,7 @@ class TimerView < UIView
     create_counter_label
     create_average_label
     clear_progress_view
+    create_timer_label
     self.create_goal_label
   end
 
@@ -45,9 +46,33 @@ class TimerView < UIView
     self.addSubview(@goal_label)
   end
 
+  def create_timer_label
+    @timer_label.removeFromSuperview unless @goal_label.nil?
+    @timer_label = UILabel.new
+    @timer_label.text = ""
+    @timer_label.frame = [[0, 10], [320, 100]]
+    @timer_label.adjustsFontSizeToFitWidth = true
+    @timer_label.font = UIFont.fontWithName("TrebuchetMS", size: 42)
+    @timer_label.textAlignment = NSTextAlignmentCenter
+
+    self.addSubview(@timer_label)
+  end
+
+  def toggle_timer
+    return unless @coach.show_timer
+    @timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target:self, selector:'timerFired', userInfo:nil, repeats:true)
+  end
+
+  def timerFired
+    return unless @coach.show_timer
+    return if @coach.current_time.nil?
+    @timer_label.text = self.print_time(@coach.current_time.to_i)
+  end
 
   def update(coach)
+    @coach ||= coach
     @counter_label.text = coach.rounds_count.to_s
+    toggle_timer if coach.rounds_count == 0
     if coach.average.nil?
       @average_label.text = ""
     else

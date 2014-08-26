@@ -61,6 +61,7 @@ class SettingsController < Formotion::FormController
         }, {
           title: "Show Timer?",
           key: :show_timer,
+          value: @coach.show_timer,
           type: :switch,
         },
         {

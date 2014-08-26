@@ -1,6 +1,10 @@
 class Coach
   attr_accessor :rounds_count, :goal, :minutes, :show_timer
 
+  def initialize
+    @show_timer = true
+  end
+
   def reset!
     @start_time = nil
     self.rounds_count = 0
@@ -15,6 +19,7 @@ class Coach
   def update_settings(hash)
     self.goal = hash[:goal]
     self.minutes = hash[:minutes]
+    self.show_timer = hash[:show_timer]
   end
 
   def round_goal
@@ -41,7 +46,7 @@ class Coach
   end
 
   def current_time
-    (get_time - @start_time + 1)
+    (get_time - @start_time)
   end
 
   def record_round
