@@ -33,4 +33,5 @@ class TimerController < UIViewController
 
     self.view.update @coach
   end
+
 end
