@@ -11,6 +11,33 @@ class TimerView < UIView
     clear_progress_view
     create_timer_label
     self.create_goal_label
+    setup_layout
+  end
+
+  def setup_layout
+    Motion::Layout.new do |layout|
+      layout.view self
+      layout.subviews({
+        "timer"   => @timer_label,
+        "counter" => @counter_label,
+        "average" => @average_label,
+        "goal"    => @goal_label
+      })
+
+      layout.metrics({
+        "margin" => 10,
+        "portraitTopMargin" => ((self.frame.size.height - 100) / 2),
+        "landscapeBottomMargin" => ((self.frame.size.width - 360) / 2)
+      })
+
+      layout.vertical "|-20-[counter]-(>=landscapeBottomMargin)-[timer]-5-[average]-5-[goal]-15-|"
+
+      layout.horizontal "|-margin-[timer]-margin-|"
+      layout.horizontal "|-margin-[counter]-margin-|"
+      layout.horizontal "|-margin-[average]-margin-|"
+      layout.horizontal "|-margin-[goal]-margin-|"
+
+    end
   end
 
   def create_counter_label
@@ -18,7 +45,7 @@ class TimerView < UIView
     @counter_label = UILabel.new
     @counter_label.text = "Start"
     @counter_label.color = PRIMARY_LABEL_COLOR
-    @counter_label.frame = self.frame
+    @counter_label.frame = [[0, 10], [0, 0]]
     @counter_label.adjustsFontSizeToFitWidth = true
     @counter_label.font = UIFont.fontWithName("TrebuchetMS", size: 128)
     @counter_label.textAlignment = NSTextAlignmentCenter
@@ -31,7 +58,7 @@ class TimerView < UIView
     @average_label = UILabel.new
     @average_label.text = "Swipe for options"
     @average_label.color = SECONDARY_LABEL_COLOR
-    @average_label.frame = [[0, self.frame.size.height-150], [320, 100]]
+    @average_label.frame = [[0, self.frame.size.height-150], [0, 0]]
     @average_label.adjustsFontSizeToFitWidth = true
     @average_label.font = UIFont.fontWithName("TrebuchetMS", size: 28)
     @average_label.textAlignment = NSTextAlignmentCenter
@@ -44,7 +71,7 @@ class TimerView < UIView
     @goal_label = UILabel.new
     @goal_label.text = ""
     @goal_label.color = SECONDARY_LABEL_COLOR
-    @goal_label.frame = [[0, self.frame.size.height-100], [320, 100]]
+    @goal_label.frame = [[0, self.frame.size.height-100], [0, 0]]
     @goal_label.adjustsFontSizeToFitWidth = true
     @goal_label.font = UIFont.fontWithName("TrebuchetMS", size: 28)
     @goal_label.textAlignment = NSTextAlignmentCenter
@@ -57,7 +84,7 @@ class TimerView < UIView
     @timer_label = UILabel.new
     @timer_label.text = ""
     @timer_label.color = SECONDARY_LABEL_COLOR
-    @timer_label.frame = [[0, 10], [320, 100]]
+    @timer_label.frame = [[0, 10], [0, 0]]
     @timer_label.adjustsFontSizeToFitWidth = true
     @timer_label.font = UIFont.fontWithName("TrebuchetMS", size: 42)
     @timer_label.textAlignment = NSTextAlignmentCenter
@@ -94,7 +121,7 @@ class TimerView < UIView
 
     unless coach.round_goal.nil?
       @goal_label.text = "Goal: #{self.print_time coach.round_goal}" unless coach.round_goal.nil?
-      add_progress_view(coach.round_goal)
+      add_progress_view
     end
   end
 
@@ -109,15 +136,38 @@ class TimerView < UIView
     @progress_view.removeFromSuperview if @progress_view
   end
 
-  def add_progress_view(seconds)
+
+  def add_progress_view
+    return if @coach.nil?
+
     self.becomeFirstResponder()
     clear_progress_view
 
-    rect = CGRectMake(0, 0, self.frame.size.width, 1)
-    @progress_view = ProgressView.alloc.initWithFrame(rect)
-    @progress_view.backgroundColor = UIColor.greenColor()
+    starting_percent = 1 - @coach.remaining_percent
+    p "starting_percent: #{starting_percent}"
+    p "height: #{height}"
+    p '-' * 88
 
-    UIView.animateWithDuration(seconds,
+    height = (starting_percent * self.frame.size.height).to_i
+    height = 1 if height == 0
+    height = self.frame.size.height if starting_percent < 0
+    rect = CGRectMake(0, 0, self.frame.size.width, height)
+
+    @progress_view = ProgressView.alloc.initWithFrame(rect)
+
+    if starting_percent >= 0
+      animate_progress_view
+    else
+      @progress_view.backgroundColor = UIColor.redColor()
+    end
+
+    self.addSubview @progress_view
+    self.sendSubviewToBack @progress_view
+  end
+
+  def animate_progress_view
+    @progress_view.backgroundColor = UIColor.greenColor()
+    UIView.animateWithDuration(@coach.remaining_seconds_in_round,
       delay: 0,
       options: UIViewAnimationOptionAllowUserInteraction,
 
@@ -129,8 +179,5 @@ class TimerView < UIView
         @progress_view.backgroundColor = UIColor.redColor() if finished
       }
     )
-
-    self.addSubview @progress_view
-    self.sendSubviewToBack @progress_view
   end
 end

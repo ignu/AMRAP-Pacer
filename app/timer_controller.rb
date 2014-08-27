@@ -7,6 +7,10 @@ class TimerController < UIViewController
     self.view = TimerView.new
   end
 
+  def didRotateFromInterfaceOrientation(fromInterfaceOrientation)
+    self.view.add_progress_view
+  end
+
   def viewDidLoad
     view.backgroundColor = UIColor.whiteColor
     view.on_swipe :left do |gesture|
@@ -33,5 +37,4 @@ class TimerController < UIViewController
 
     self.view.update @coach
   end
-
 end

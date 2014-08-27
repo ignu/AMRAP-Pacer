@@ -31,6 +31,24 @@ describe "Coach" do
     App.notification_center.unobserve "ResetTimer"
   end
 
+  describe "remaining time" do
+    before do
+      @coach.update_settings({
+        goal: "10",
+        minutes: "10"
+      })
+
+    end
+
+    it "can calculate the remaining time and percent done" do
+      @coach.mock!(:get_time, return: @start + 30)
+      @coach.round_goal.should == 60
+
+      @coach.remaining_seconds_in_round.should == 30
+      @coach.remaining_percent.should == 0.5
+    end
+  end
+
   describe "round_goal" do
     context "given a goal and a time" do
       before do
@@ -44,12 +62,13 @@ describe "Coach" do
         @coach.round_goal.should == 60
 
         5.times { |n| @coach.record_round }
-        @coach.stub!(:get_time, return: @start + 60 * 9)
+        @coach.last_round_time =  60 * 9
 
         # 5 rounds in 60 seconds
         @coach.round_goal.to_i.should == 12
 
         5.times { |n| @coach.record_round }
+        @coach.last_round_time =  60 * 9
         @coach.round_goal.to_i.should == (60*9)/10
       end
     end
