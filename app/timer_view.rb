@@ -106,7 +106,8 @@ class TimerView < UIView
   end
 
   def ensure_progress_view_complete
-    if @coach.remaining_percent == 100 and @progress_view
+    if @coach.remaining_percent == 100 && @progress_view && @progress_view.layer.animationKeys.nil?
+      @progress_view.layer.animationKeys.nil?
       @progress_view.setBackgroundColor BAD_COLOR
     end
   end
