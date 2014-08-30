@@ -180,11 +180,7 @@ class TimerView < UIView
       end,
 
       completion: -> (finished) {
-        if finished
-          @progress_view.setBackgroundColor BAD_COLOR
-        else
-          self.add_progress_view
-        end
+        @progress_view.setBackgroundColor BAD_COLOR if finished
       }
     )
   end
