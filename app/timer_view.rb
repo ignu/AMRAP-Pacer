@@ -6,7 +6,7 @@ class TimerView < UIView
   GOOD_COLOR = [136, 140, 3].uicolor
 
   def drawRect(rect)
-    self.setBackgroundColor UIColor.blackColor #SECONDARY_LABEL_COLOR = [55, 65, 55].uicolor
+    self.setBackgroundColor UIColor.blackColor
     reset_timer
     super rect
     create_counter_label
@@ -33,7 +33,7 @@ class TimerView < UIView
         "landscapeBottomMargin" => ((self.frame.size.width - 360) / 2)
       })
 
-      layout.vertical "|-20-[counter]-(>=landscapeBottomMargin)-[timer]-5-[average]-5-[goal]-15-|"
+      layout.vertical "|-25-[counter]-(>=landscapeBottomMargin)-[timer]-5-[average]-5-[goal]-15-|"
 
       layout.horizontal "|-margin-[timer]-margin-|"
       layout.horizontal "|-margin-[counter]-margin-|"
@@ -97,11 +97,17 @@ class TimerView < UIView
   end
 
   def toggle_timer
-    return unless @coach.show_timer
     @timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target:self, selector:'timerFired', userInfo:nil, repeats:true)
   end
 
+  def ensure_progress_view_complete
+    if @coach.remaining_percent == 100 and @progress_view
+      @progress_view.setBackgroundColor BAD_COLOR
+    end
+  end
+
   def timerFired
+    self.ensure_progress_view_complete
     return unless @coach.show_timer
     return if @coach.current_time.nil?
     @timer_label.text = self.print_time(@coach.current_time.to_i)
@@ -139,7 +145,6 @@ class TimerView < UIView
   def clear_progress_view
     @progress_view.removeFromSuperview if @progress_view
   end
-
 
   def add_progress_view
     return if @coach.nil?
@@ -180,7 +185,9 @@ class TimerView < UIView
       end,
 
       completion: -> (finished) {
-        @progress_view.setBackgroundColor BAD_COLOR if finished
+        if finished
+          @progress_view.setBackgroundColor BAD_COLOR
+        end
       }
     )
   end

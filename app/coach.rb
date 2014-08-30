@@ -61,6 +61,8 @@ class Coach
   end
 
   def current_time
+    return get_time if @start_time.nil?
+
     (get_time - @start_time)
   end
 
