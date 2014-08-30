@@ -85,7 +85,7 @@ class TimerView < UIView
   end
 
   def create_timer_label
-    @timer_label.removeFromSuperview unless @goal_label.nil?
+    @timer_label.removeFromSuperview unless @timer_label.nil?
     @timer_label = UILabel.new
     @timer_label.text = ""
     @timer_label.color = PRIMARY_LABEL_COLOR
@@ -136,7 +136,7 @@ class TimerView < UIView
     end
 
     unless coach.round_goal.nil?
-      unless coach.round_goal.nil?
+      unless coach.goal.nil?
         @goal_label.text = "Goal: #{self.print_time coach.round_goal}"
       end
       add_progress_view
