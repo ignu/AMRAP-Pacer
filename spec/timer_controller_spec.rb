@@ -12,7 +12,7 @@ describe "TimerController" do
 
     it "displays start text and goal" do
       view("0").nil?.should == false
-      view("Goal: 02:00").nil?.should == false
+      view("Goal: 2:00").nil?.should == false
     end
   end
 end

@@ -139,7 +139,7 @@ class TimerView < UIView
     return if seconds.nil?
     minutes = seconds/60
     remainder = seconds - (minutes*60)
-    "#{minutes.to_s.rjust(2, '0')}:#{remainder.to_s.rjust(2, '0')}"
+    "#{minutes}:#{remainder.to_s.rjust(2, '0')}"
   end
 
   def clear_progress_view
