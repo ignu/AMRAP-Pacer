@@ -1,4 +1,6 @@
 class TimerController < UIViewController
+  BACKGROUND_COLOR = UIColor.blackColor
+
   def initialize(coach)
     @coach = coach
   end
@@ -12,7 +14,7 @@ class TimerController < UIViewController
   end
 
   def viewDidLoad
-    view.backgroundColor = UIColor.whiteColor
+    view.backgroundColor = BACKGROUND_COLOR
     view.on_swipe :left do |gesture|
       new_vc = SettingsController.new(@coach)
       nav_controller.push new_vc

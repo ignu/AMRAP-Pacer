@@ -17,4 +17,3 @@ gem 'formotion'
 gem 'motion-stump'
 
 gem 'motion-layout'
-

@@ -1,9 +1,12 @@
 class TimerView < UIView
   attr_accessor :counter_label
-  PRIMARY_LABEL_COLOR   = UIColor.blackColor
-  SECONDARY_LABEL_COLOR = UIColor.blackColor
+  PRIMARY_LABEL_COLOR   = [189, 179, 170].uicolor
+  SECONDARY_LABEL_COLOR = [55, 55, 65].uicolor
+  BAD_COLOR = [115, 0, 24].uicolor
+  GOOD_COLOR = [136, 140, 3].uicolor
 
   def drawRect(rect)
+    self.setBackgroundColor UIColor.blackColor #SECONDARY_LABEL_COLOR = [55, 65, 55].uicolor
     reset_timer
     super rect
     create_counter_label
@@ -49,7 +52,8 @@ class TimerView < UIView
     @counter_label.adjustsFontSizeToFitWidth = true
     @counter_label.font = UIFont.fontWithName("TrebuchetMS", size: 128)
     @counter_label.textAlignment = NSTextAlignmentCenter
-
+    @counter_label.shadowColor = SECONDARY_LABEL_COLOR
+    @counter_label.shadowOffset = CGSizeMake(1, 1)
     self.addSubview(@counter_label)
   end
 
@@ -57,7 +61,7 @@ class TimerView < UIView
     @average_label.removeFromSuperview unless @average_label.nil?
     @average_label = UILabel.new
     @average_label.text = "Swipe for options"
-    @average_label.color = SECONDARY_LABEL_COLOR
+    @average_label.color = PRIMARY_LABEL_COLOR
     @average_label.frame = [[0, self.frame.size.height-150], [0, 0]]
     @average_label.adjustsFontSizeToFitWidth = true
     @average_label.font = UIFont.fontWithName("TrebuchetMS", size: 28)
@@ -70,7 +74,7 @@ class TimerView < UIView
     @goal_label.removeFromSuperview unless @goal_label.nil?
     @goal_label = UILabel.new
     @goal_label.text = ""
-    @goal_label.color = SECONDARY_LABEL_COLOR
+    @goal_label.color = PRIMARY_LABEL_COLOR
     @goal_label.frame = [[0, self.frame.size.height-100], [0, 0]]
     @goal_label.adjustsFontSizeToFitWidth = true
     @goal_label.font = UIFont.fontWithName("TrebuchetMS", size: 28)
@@ -83,7 +87,7 @@ class TimerView < UIView
     @timer_label.removeFromSuperview unless @goal_label.nil?
     @timer_label = UILabel.new
     @timer_label.text = ""
-    @timer_label.color = SECONDARY_LABEL_COLOR
+    @timer_label.color = PRIMARY_LABEL_COLOR
     @timer_label.frame = [[0, 10], [0, 0]]
     @timer_label.adjustsFontSizeToFitWidth = true
     @timer_label.font = UIFont.fontWithName("TrebuchetMS", size: 42)
@@ -158,7 +162,7 @@ class TimerView < UIView
     if starting_percent >= 0
       animate_progress_view
     else
-      @progress_view.backgroundColor = UIColor.redColor()
+      @progress_view.setBackgroundColor BAD_COLOR
     end
 
     self.addSubview @progress_view
@@ -166,7 +170,7 @@ class TimerView < UIView
   end
 
   def animate_progress_view
-    @progress_view.backgroundColor = UIColor.greenColor()
+    @progress_view.setBackgroundColor GOOD_COLOR
     UIView.animateWithDuration(@coach.remaining_seconds_in_round,
       delay: 0,
       options: UIViewAnimationOptionAllowUserInteraction,
@@ -176,7 +180,7 @@ class TimerView < UIView
       end,
 
       completion: -> (finished) {
-        @progress_view.backgroundColor = UIColor.redColor() if finished
+        @progress_view.setBackgroundColor BAD_COLOR if finished
       }
     )
   end
