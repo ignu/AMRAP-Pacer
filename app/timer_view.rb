@@ -1,5 +1,6 @@
 class TimerView < UIView
   attr_accessor :counter_label
+
   PRIMARY_LABEL_COLOR   = [189, 179, 170].uicolor
   SECONDARY_LABEL_COLOR = [55, 55, 65].uicolor
   BAD_COLOR = [115, 0, 24].uicolor
@@ -97,7 +98,11 @@ class TimerView < UIView
   end
 
   def toggle_timer
-    @timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target:self, selector:'timerFired', userInfo:nil, repeats:true)
+    @timer = NSTimer.scheduledTimerWithTimeInterval(0.25,
+      target: self,
+      selector: 'timerFired',
+      userInfo: nil,
+      repeats: true)
   end
 
   def ensure_progress_view_complete
@@ -130,7 +135,9 @@ class TimerView < UIView
     end
 
     unless coach.round_goal.nil?
-      @goal_label.text = "Goal: #{self.print_time coach.round_goal}" unless coach.round_goal.nil?
+      unless coach.round_goal.nil?
+        @goal_label.text = "Goal: #{self.print_time coach.round_goal}"
+      end
       add_progress_view
     end
   end
@@ -153,9 +160,6 @@ class TimerView < UIView
     clear_progress_view
 
     starting_percent = 1 - @coach.remaining_percent
-    p "starting_percent: #{starting_percent}"
-    p "height: #{height}"
-    p '-' * 88
 
     height = (starting_percent * self.frame.size.height).to_i
     height = 1 if height == 0

@@ -7,7 +7,6 @@ class AppDelegate
     nc = UINavigationController.alloc.initWithRootViewController vc
 
     App.notification_center.observe "ResetTimer" do |n|
-      p "timer reset ...."
       vc.view.setNeedsDisplay
     end
 
