@@ -18,4 +18,11 @@ class AppDelegate
     @window.rootViewController.wantsFullScreenLayout = true
     @window.makeKeyAndVisible
   end
+
+  # weird things happen with timers when the application goes in the background.
+  #
+  # just reset the timer.
+  def applicationDidEnterBackground(application)
+    @coach.reset! unless @coach.nil?
+  end
 end
