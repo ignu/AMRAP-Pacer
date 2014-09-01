@@ -1,8 +1,8 @@
 class AppDelegate
   def application(application, didFinishLaunchingWithOptions:launchOptions)
 
-    coach = Coach.new
-    vc = TimerController.new coach
+    @coach = Coach.new
+    vc = TimerController.new @coach
 
     nc = UINavigationController.alloc.initWithRootViewController vc
 

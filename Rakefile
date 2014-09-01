@@ -12,4 +12,5 @@ Motion::Project::App.setup do |app|
   # Use `rake config' to see complete project settings.
   app.name = 'AMRAP Pacer'
   app.redgreen_style = :full
+  app.interface_orientations = [:portrait]
 end

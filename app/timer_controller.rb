@@ -1,6 +1,10 @@
 class TimerController < UIViewController
   BACKGROUND_COLOR = UIColor.blackColor
 
+  def shouldAutorotate
+    false
+  end
+
   def initialize(coach)
     @coach = coach
   end
