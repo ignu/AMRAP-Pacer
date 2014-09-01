@@ -50,6 +50,11 @@ class Coach
     self.remaining_seconds_in_round.to_f/self.round_goal
   end
 
+  def has_goal?
+    (!goal.nil?) && goal != ""
+  end
+
+
   def average
     return nil unless self.rounds_count > 0
     result = self.last_round_time / self.rounds_count

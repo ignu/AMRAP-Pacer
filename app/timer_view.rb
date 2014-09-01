@@ -136,7 +136,7 @@ class TimerView < UIView
     end
 
     unless coach.round_goal.nil?
-      unless coach.goal.nil?
+      if coach.has_goal?
         @goal_label.text = "Goal: #{self.print_time coach.round_goal}"
       end
       add_progress_view
