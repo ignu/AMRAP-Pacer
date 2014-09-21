@@ -26,9 +26,16 @@ describe "Coach" do
       x.should == 1
       @coach.reset!
       x.should == 2
+
+      App.notification_center.unobserve "ResetTimer"
     end
 
-    App.notification_center.unobserve "ResetTimer"
+    it "resets last_round" do
+      @coach.last_round_time =  60
+      @coach.reset!
+
+      @coach.last_round_time.should == 0
+    end
   end
 
   describe "remaining time" do

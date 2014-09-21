@@ -9,6 +9,7 @@ class Coach
   def reset!
     @start_time = nil
     self.rounds_count = 0
+    self.last_round_time = 0
     App.notification_center.post "ResetTimer"
   end
 
